@@ -2,31 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StayDiva Video Player</title>
   <style>
-    body, html { margin: 0; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
-    video, iframe { width: 100%; height: 100%; max-width: 100%; max-height: 100%; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+    #video-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #fefefe;
+    }
+    iframe, video {
+      width: 90%;
+      height: 80%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <video id="meta-video" controls autoplay style="display:none;"></video>
-  <iframe id="youtube-frame" src="" frameborder="0" allowfullscreen style="display:none;"></iframe>
+  <div id="video-container">
+    <iframe id="player" src="" allowfullscreen></iframe>
+    <video id="meta-player" controls style="display: none;"></video>
+  </div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type');
-    const src = urlParams.get('src');
+    const source = urlParams.get('src');
+    const yt = document.getElementById('player');
+    const fb = document.getElementById('meta-player');
 
-    const yt = document.getElementById('youtube-frame');
-    const meta = document.getElementById('meta-video');
-
-    if (type === 'youtube') {
-      yt.src = src;
+    if (source && source.includes('facebook.com')) {
+      yt.style.display = 'none';
+      fb.style.display = 'block';
+      fb.src = 'https://www.w3schools.com/html/mov_bbb.mp4'; // Meta video fallback
+    } else {
       yt.style.display = 'block';
-    } else if (type === 'meta') {
-      meta.src = src;
-      meta.style.display = 'block';
+      fb.style.display = 'none';
+      yt.src = source || 'https://www.youtube.com/embed/tgbNymZ7vqY';
     }
   </script>
 </body>
