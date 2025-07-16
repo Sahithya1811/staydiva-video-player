@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StayDiva Video Player</title>
+  <style>
+    body, html { margin: 0; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
+    video, iframe { width: 100%; height: 100%; max-width: 100%; max-height: 100%; }
+  </style>
+</head>
+<body>
+  <video id="meta-video" controls autoplay style="display:none;"></video>
+  <iframe id="youtube-frame" src="" frameborder="0" allowfullscreen style="display:none;"></iframe>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    const src = urlParams.get('src');
+
+    const yt = document.getElementById('youtube-frame');
+    const meta = document.getElementById('meta-video');
+
+    if (type === 'youtube') {
+      yt.src = src;
+      yt.style.display = 'block';
+    } else if (type === 'meta') {
+      meta.src = src;
+      meta.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
